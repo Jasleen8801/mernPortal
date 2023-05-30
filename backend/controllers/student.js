@@ -107,13 +107,13 @@ exports.applyJob = async (req, res) => {
 
   try {
     const job = await Job.findById(jobId);
-    if(!job) {
+    if (!job) {
       return res.status(400).send({ message: "Job not found" });
     }
 
     student.application.push({ jobId: jobId });
     await student.save();
-    
+
     res.status(200).send({ message: "Applied for job successfully" });
   } catch (err) {
     console.log(err);
@@ -123,6 +123,42 @@ exports.applyJob = async (req, res) => {
 
 exports.withdrawJob = async (req, res) => {
   const jobId = req.params.jobId;
+};
 
-  
-}
+exports.searchJobByName = async (req, res) => {
+  const { jobName } = req.params;
+
+  try {
+    const jobs = await Job.find({ title: { $regex: jobName, $options: "i" } });
+    res.status(200).send({ jobs: jobs, message: "Jobs found" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+exports.searchJobBySkills = async (req, res) => {
+  const { skills } = req.params;
+
+  try {
+    const jobs = await Job.find({ skillsRequired: { $in: skills.split(",") } });
+    res.status(200).send({ jobs: jobs, message: "Job search successful" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+exports.searchCompanyByName = async (req, res) => {
+  const { companyName } = req.params;
+
+  try {
+    const jobs = await Job.find({
+      company: { $regex: companyName, $options: "i" },
+    });
+    res.status(200).send({ jobs: jobs, message: "Jobs found" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
