@@ -57,19 +57,10 @@ exports.postLogin = (req, res) => {
 };
 
 exports.postSignup = async (req, res) => {
-  const {
-    userName,
-    email,
-    password,
-    description,
-    skills,
-    projects,
-    education,
-    experience,
-  } = req.body;
+  const { userName, email, password, description, skills } = req.body;
 
   try {
-    const userExists = await Student.findOne({ userName: userName });
+    const userExists = await Student.findOne({ userName });
     if (userExists) {
       return res.status(400).send({ message: "User already exists" });
     }
@@ -82,22 +73,53 @@ exports.postSignup = async (req, res) => {
       password: hashedPassword,
       description,
       skills,
-      projects,
-      education,
-      experience,
     });
 
-    student
-      .save()
-      .then((result) => {
-        res.status(201).send({ message: "Student created successfully" });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send({ message: "Internal server error" });
-      });
+    await student.save();
+    res.status(201).send({ message: "Student created successfully" });
   } catch (err) {
     console.log(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  const {
+    userName,
+    email,
+    description,
+    skills,
+    projects,
+    education,
+    experience,
+  } = req.body;
+  const userId = req.params.userId;
+
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(
+      userId,
+      {
+        userName,
+        email,
+        description,
+        skills,
+        projects,
+        education,
+        experience,
+      },
+      { new: true }
+    );
+
+    if (!updatedStudent) {
+      return res.status(400).send({ message: "Student not found" });
+    }
+
+    res.json({
+      message: "Student updated successfully",
+      student: updatedStudent,
+    });
+  } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Internal server error" });
   }
 };
@@ -123,6 +145,29 @@ exports.applyJob = async (req, res) => {
 
 exports.withdrawJob = async (req, res) => {
   const jobId = req.params.jobId;
+  const userId = req.user.id; // Assuming you have implemented authentication and can access the user's ID
+
+  try {
+    const student = await Student.findById(userId);
+    if (!student) {
+      return res.status(400).send({ message: "Student not found" });
+    }
+
+    const jobIndex = student.application.findIndex(
+      (application) => application.jobId === jobId
+    );
+    if (jobIndex === -1) {
+      return res.status(400).send({ message: "Job application not found" });
+    }
+
+    student.application.splice(jobIndex, 1);
+    await student.save();
+
+    res.status(200).send({ message: "Job application withdrawn successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
 };
 
 exports.searchJobByName = async (req, res) => {

@@ -67,7 +67,7 @@ exports.postLogin = (req, res) => {
 
 // to get to the signup page
 exports.postSignup = async (req, res) => {
-  const { userName, password, name } = req.body;
+  const { userName, password } = req.body;
 
   try {
     const userExists = await Admin.findOne({ userName: userName });
@@ -80,7 +80,6 @@ exports.postSignup = async (req, res) => {
     const admin = new Admin({
       userName,
       password: hashedPassword,
-      name,
     });
 
     admin

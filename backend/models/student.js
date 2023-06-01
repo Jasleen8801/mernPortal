@@ -5,49 +5,39 @@ const Schema = mongoose.Schema;
 const projectSchema = new Schema({
   title: {
     type: String,
-    required: true,
   },
   description: {
     type: String,
-    required: true,
   },
 });
 
 const experienceSchema = new Schema({
   title: {
     type: String,
-    required: true,
   },
   company: {
     type: String,
-    required: true,
   },
   location: {
     type: String,
-    required: true,
   },
 });
 
 const educationSchema = new Schema({
   instituteName: {
     type: String,
-    required: true,
   },
   startYear: {
     type: Number,
-    required: true,
   },
   endYear: {
     type: Number,
-    required: true,
   },
   degree: {
     type: String,
-    required: true,
   },
   major: {
     type: String,
-    required: true,
   },
 });
 

@@ -1,26 +1,14 @@
-const mongoose = require("mongoose");
-
+// Assuming you have imported the necessary dependencies
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Define the Admin schema
 const adminSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3,
-  },
-  Name: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
+  userName: { type: String, required: true },
+  password: { type: String, required: true },
 });
 
-const Admin = mongoose.model("Admin", adminSchema);
+// Create the Admin model
+const Admin = mongoose.model('Admin', adminSchema);
+
+module.exports = Admin;

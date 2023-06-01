@@ -1,28 +1,45 @@
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import React from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import LandingPage from "./pages/promo/landingPage";
+import JobListing from "./pages/promo/jobListing";
+import StudentLogin from "./pages/student/login";
+import StudentSignUp from "./pages/student/signup";
+import StudentProfile from "./pages/student/profile";
+import StudentUpdate from "./pages/student/update";
+import BusinessLogin from "./pages/business/login";
+import BusinessSignUp from "./pages/business/signup";
+import BusinessProfile from "./pages/business/profile";
+import AdminLogin from "./pages/admin/login";
+import AdminSignUp from "./pages/admin/signup";
+import AdminProfile from "./pages/admin/profile";
+import AdminAddBusiness from "./pages/admin/addBusiness";
+
+const routes = [
+  { path: "/", element: <LandingPage /> },
+  { path: "/joblistings", element: <JobListing /> },
+  { path: "/student/login", element: <StudentLogin /> },
+  { path: "/student/signUp", element: <StudentSignUp /> },
+  { path: "/student/profile", element: <StudentProfile /> },
+  { path: "/student/update", element: <StudentUpdate /> },
+  { path: "/business/login", element: <BusinessLogin /> },
+  { path: "/business/signUp", element: <BusinessSignUp /> },
+  { path: "/business/profile", element: <BusinessProfile /> },
+  { path: "/admin/login", element: <AdminLogin /> },
+  { path: "/admin/signUp", element: <AdminSignUp /> },
+  { path: "/admin/profile", element: <AdminProfile /> },
+  { path: "/admin/addBusiness", element: <AdminAddBusiness /> },
+];
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route exact path="/" element={<h1>Landing Page</h1>} />
-        <Route exact path="/joblistings" element={<h1>Job Listings</h1>} />
-
-        <Route exact path="/student/login" element={<h1>Student Login</h1>} />
-        <Route exact path="/student/signUp" element={<h1>Student signUp</h1>} />
-        <Route exact path="/student/profile" element={<h1>Student Profile</h1>} />
-        
-        <Route exact path="/business/login" element={<h1>Business Login</h1>} />
-        <Route exact path="/business/signUp" element={<h1>Business signUp</h1>} />
-        <Route exact path="/business/profile" element={<h1>Business Profile</h1>} />
-
-        <Route exact path="/admin/login" element={<h1>Admin Login</h1>} />
-        <Route exact path="/admin/signUp" element={<h1>Admin signUp</h1>} />
-        <Route exact path="/admin/home" element={<h1>Admin Page</h1>} />
+        {routes.map((route, index) => (
+          <Route key={index} path={route.path} element={route.element} />
+        ))}
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
