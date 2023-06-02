@@ -98,24 +98,27 @@ exports.postSignup = async (req, res) => {
 };
 
 // to add a business
-exports.addBusiness = (req, res) => {
+exports.addBusiness = async (req, res) => {
   const { companyName, email } = req.body;
 
   // generate a random pass key
   const passKey = Math.random().toString(36).slice(-8);
 
+  const hashedPassword = await bcrypt.hash(passKey, 12);
+
   const business = new Business({
     userName: companyName,
-    password: passKey,
+    password: hashedPassword,
     email: email,
   });
 
   business
     .save()
     .then(() => {
-      const message = `Your initial password is ${passKey}`;
-      sendEmail(email, "Welcome to the Job Portal", message);
-      res.status(201).send({ message: "Business created successfully" });
+      console.log(`Passkey is ${passKey}`);
+      // const message = `Your initial password is ${passKey}`;
+      // sendEmail(email, "Welcome to the Job Portal", message);
+      res.status(201).send({ message: `Business created successfully. Passkey is ${passKey}` });
     })
     .catch((err) => {
       console.log(err);

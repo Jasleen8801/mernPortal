@@ -23,9 +23,7 @@ const AdminProfile = () => {
       const url = process.env.REACT_APP_SERVER + "admin/home";
       fetchData(url);
     } else {
-      setTimeout(() => {
-        navigate('/admin/login');
-      }, 0);
+      navigate('/admin/login')
     }
   }, [cookie, navigate]);
 

@@ -16,10 +16,12 @@ exports.getBusiness = async (req, res) => {
   }
   try {
     const data = jwt.verify(token, process.env.BUSINESS_SECRET);
-    uid = data.id;
+    const uid = data.id;
     const business = await Business.findById(uid);
     const jobs = await Job.find({ company: uid });
-    res.status(200).send({ business: business, jobs: jobs });
+    res
+      .status(200)
+      .send({ business: business, jobs: jobs, message: "Business Found" });
   } catch (err) {
     console.log(err);
     res.status(500).send({ message: "Internal server error" });
@@ -27,7 +29,7 @@ exports.getBusiness = async (req, res) => {
 };
 
 exports.postLogin = async (req, res) => {
-  const { userName, passKey } = req.body;
+  const { userName, password } = req.body;
 
   try {
     const business = await Business.findOne({ userName: userName });
@@ -35,7 +37,7 @@ exports.postLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const isMatch = await bcrypt.compare(passKey, business.passKey);
+    const isMatch = await bcrypt.compare(password, business.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -69,7 +71,6 @@ exports.postCompleteProfile = async (req, res) => {
       return res.status(400).send({ message: "No such business exists" });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 12);
 
     // Update the business profile with the additional information

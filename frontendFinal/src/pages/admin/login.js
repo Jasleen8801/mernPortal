@@ -25,10 +25,6 @@ const AdminLogin = () => {
     if(isLoggedIn){
       navigate('/admin/profile');
     }
-    let isLoggedInUser = Cookies.get('jwt');
-    if(isLoggedInUser){
-      navigate('/student/profile');
-    }
   });
 
   const handleSubmit = async (e) => {
@@ -83,7 +79,7 @@ const AdminLogin = () => {
                 onClick={handleTogglePassword}
               ></i>
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit">
               Login
             </button>
           </form>

@@ -6,7 +6,7 @@ const businessCreateToken = (business) => {
       userName: business.userName,
       id: business.id,
     },
-    "61MbqkTeXsMYbWKgJyt1XhFiDuWZTXNOSqwRWs"
+    "IsImV4cCI6MTY4NTY4NDU4MCwiaWF0IjoxNjg1Njg0NTgwfQ"
   );
   return token;
 };

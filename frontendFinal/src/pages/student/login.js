@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const StudentLogin = () => {
@@ -14,10 +14,6 @@ const StudentLogin = () => {
     let isLoggedIn = !!Cookies.get("jwt");
     if (isLoggedIn) {
       navigate("/student/profile");
-    }
-    let isLoggedInAdmin = !!Cookies.get("jwtAdmin");
-    if (isLoggedInAdmin) {
-      navigate("/admin/profile");
     }
   });
 
@@ -81,10 +77,12 @@ const StudentLogin = () => {
                 onClick={handleTogglePassword}
               ></i>
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit">
               Login
             </button>
-            <a href="/student/signup">Register</a>
+            <Link to="/student/signup">
+              <button>Signup</button>
+            </Link>
           </form>
         </div>
       </div>
