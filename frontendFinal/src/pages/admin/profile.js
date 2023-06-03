@@ -15,10 +15,6 @@ const AdminProfile = () => {
   const isLoggedIn = !!Cookies.get("jwtAdmin");
 
   useEffect(() => {
-    let isLoggedInUser = !!Cookies.get('jwt');
-    if(isLoggedInUser) {
-      navigate('/student/profile');
-    }
     if(cookie) {
       const url = process.env.REACT_APP_SERVER + "admin/home";
       fetchData(url);
@@ -33,6 +29,7 @@ const AdminProfile = () => {
       const response = await axios.get(url, {
         params: { cookieValue: cookie }
       });
+      // console.log(response.data);
       const { admin, students, businesses, jobs } = response.data;
       setAdmin(admin);
       setStudents(students);
@@ -85,8 +82,7 @@ const AdminProfile = () => {
         <ul>
           {businesses.map((business) => (
             <li key={business.id}>
-              <p>Name: {business.name}</p>
-              {/* Display other business data as needed */}
+              <p>Name: {business.userName}</p>
             </li>
           ))}
         </ul>

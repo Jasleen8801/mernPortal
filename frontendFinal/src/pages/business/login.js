@@ -30,8 +30,8 @@ const BusinessLogin = () => {
     try {
       const url = process.env.REACT_APP_SERVER + "business/login";
       const response = await axios.post(url, user);
-      const jwtBusiness = response.data.access;
-      Cookies.set("jwtBusiness", jwtBusiness);
+      const cookie = response.data.access;
+      Cookies.set("jwtBusiness", cookie);
       navigate("/business/profile");
     } catch (error) {
       if (

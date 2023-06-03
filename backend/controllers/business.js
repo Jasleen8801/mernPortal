@@ -17,14 +17,14 @@ exports.getBusiness = async (req, res) => {
   try {
     const data = jwt.verify(token, process.env.BUSINESS_SECRET);
     const uid = data.id;
-    const business = await Business.findById(uid);
+    const business = await Business.findById({ _id: uid });
     const jobs = await Job.find({ company: uid });
     res
       .status(200)
       .send({ business: business, jobs: jobs, message: "Business Found" });
   } catch (err) {
     console.log(err);
-    res.status(500).send({ message: "Internal server error" });
+    res.status(500).send({ message: "home:::Internal server error" });
   }
 };
 
@@ -42,11 +42,12 @@ exports.postLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = createToken(business._id);
-    res.status(200).json({ token: token, business: business });
+    const token = createToken(business);
+    // console.log(token);
+    res.status(200).send({ access: token, message: "Logged in successfully" });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).send({ message: "loginnnn: Internal server error" });
   }
 };
 
@@ -65,7 +66,6 @@ exports.postCompleteProfile = async (req, res) => {
   } = req.body;
 
   try {
-    // Find the business by company name
     const business = await Business.findOne({ companyName: companyName });
     if (!business) {
       return res.status(400).send({ message: "No such business exists" });
@@ -73,7 +73,6 @@ exports.postCompleteProfile = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Update the business profile with the additional information
     business.password = hashedPassword;
     business.companyDescription = companyDescription;
     business.companyLocation = companyLocation;
@@ -110,6 +109,7 @@ exports.addJobPosting = async (req, res) => {
 
   try {
     const business = await Business.findById(businessId);
+    // console.log(business);
     if (!business) {
       return res.status(400).send({ message: "No such business exists" });
     }
@@ -152,7 +152,7 @@ exports.deleteJobPosting = async (req, res) => {
       return res.status(400).send({ message: "No such job posting exists" });
     }
 
-    await job.remove();
+    await Job.deleteOne({ _id: jobId });
 
     business.jobPostings = business.jobPostings.filter(
       (item) => item.jobID.toString() !== jobId
@@ -165,6 +165,7 @@ exports.deleteJobPosting = async (req, res) => {
     res.status(500).send({ message: "Internal server error" });
   }
 };
+
 
 exports.getApplicants = async (req, res) => {
   const jobId = req.params.jobId;

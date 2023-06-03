@@ -79,7 +79,7 @@ const StudentSignup = () => {
     if (validate()) {
       setIsSubmitting(true);
       axios
-        .post("http://localhost:3000/student/signup", user)
+        .post(process.env.REACT_APP_SERVER + "student/signup", user)
         .then((response) => {
           console.log(response);
           setMessage(response.data.message);

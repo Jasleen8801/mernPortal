@@ -20,7 +20,7 @@ exports.getAdmin = async (req, res) => {
   }
   try {
     const data = jwt.verify(token, process.env.ADMIN_SECRET);
-    uid = data.id;
+    const uid = data.id;
     let admin = await Admin.findById({ _id: uid });
     let jobs = await Job.find();
     let students = await Student.find();
@@ -101,29 +101,28 @@ exports.postSignup = async (req, res) => {
 exports.addBusiness = async (req, res) => {
   const { companyName, email } = req.body;
 
-  // generate a random pass key
-  const passKey = Math.random().toString(36).slice(-8);
+  try {
+    const userExists = await Business.findOne({ userName: companyName });
+    
+    if (userExists) {
+      return res.status(400).send({ message: "User already exists" });
+    } 
 
-  const hashedPassword = await bcrypt.hash(passKey, 12);
+    const passKey = Math.random().toString(36).slice(-8);
+    const hashedPassword = await bcrypt.hash(passKey, 12);
 
-  const business = new Business({
-    userName: companyName,
-    password: hashedPassword,
-    email: email,
-  });
-
-  business
-    .save()
-    .then(() => {
-      console.log(`Passkey is ${passKey}`);
-      // const message = `Your initial password is ${passKey}`;
-      // sendEmail(email, "Welcome to the Job Portal", message);
-      res.status(201).send({ message: `Business created successfully. Passkey is ${passKey}` });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send({ message: "Internal server error" });
+    const business = new Business({
+      userName: companyName,
+      password: hashedPassword,
+      email: email,
     });
+
+    await business.save();
+    res.status(201).send({ message: `Business created successfully. Passkey is ${passKey}` });
+  } catch (error) {
+    console.log(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
 };
 
 // to delete a job posting

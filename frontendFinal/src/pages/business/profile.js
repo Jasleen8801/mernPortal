@@ -4,9 +4,9 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const BusinessProfile = () => {
-  const [business, setBusiness] = useState({});
+  const [user, setUser] = useState({});
+  const [error, setError] = useState(null);
   const [jobs, setJobs] = useState([]);
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -17,19 +17,25 @@ const BusinessProfile = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(process.env.REACT_APP_SERVER + "business/home", {
-        params: { cookieValue: cookie },
-      });
-      console.log(response.data);
+      const response = await axios.get(
+        process.env.REACT_APP_SERVER + "business/home",
+        {
+          params: { cookieValue: cookie },
+        }
+      );
       const { business, jobs, message } = response.data;
-      setBusiness(business);
+      setUser(business);
       setJobs(jobs);
     } catch (error) {
-      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.staus <= 500
+      ) {
         setError(error.response.data.message);
         navigate("/business/login");
       } else {
-        setError("Something went wrong");
+        setError("Something went wrong. Please try again later.");
       }
     }
     setIsLoading(false);
@@ -39,6 +45,19 @@ const BusinessProfile = () => {
     e.preventDefault();
     Cookies.remove("jwtBusiness");
     navigate("/business/login");
+  };
+
+  const deleteJob = async (jobId) => {
+    try {
+      let businessId = user._id;
+      const url =
+        process.env.REACT_APP_SERVER +
+        `business/${businessId}/deleteJob/${jobId}`;
+      await axios.delete(url);
+      setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
+    } catch (error) {
+      setError(error.response.data.message);
+    }
   };
 
   useEffect(() => {
@@ -53,27 +72,45 @@ const BusinessProfile = () => {
 
   if (!isLoggedIn) {
     navigate("/business/login");
-    return null; // Return null if not logged in to prevent rendering the rest of the component
-  }
-
-  return (
-    <div>
-      <h2>Business Profile</h2>
-      <div>
-        <h3>Company Name: {business.companyName}</h3>
-        <p>Email: {business.email}</p>
-        <p>Company Description: {business.companyDescription}</p>
-        <p>Company Location: {business.companyLocation}</p>
-        <p>Website: {business.website}</p>
-        <p>Industry: {business.industry}</p>
-        <p>Company Size: {business.companySize}</p>
-        <p>Founded Year: {business.foundedYear}</p>
-        <p>Contact Email: {business.contactEmail}</p>
-        <p>Contact Number: {business.contactNumber}</p>
-        <button onClick={handleSignOut}>Sign Out</button>
+  } else if (isLoading) {
+    return (
+      <div className="container">
+        <p className="lead">Loading...</p>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="container">
+        <h1>Business Profile</h1>
+        <div>
+          <h3>Company Name: {user.userName}</h3>
+          <p>Email: {user.email}</p>
+          <p>userId: {user._id}</p>
+        </div>
+        <div>
+          {jobs.length && <h2>Jobs</h2>}
+          {jobs.map((job) => (
+            <div key={job._id}>
+              <h4>{job.title}</h4>
+              <p>
+                Description: {job.description} <br />
+                Location: {job.location}
+              </p>
+              <button onClick={() => deleteJob(job._id)}>Delete Job</button>
+            </div> 
+          ))}{" "}
+          <br />
+        </div>
+        <button onClick={handleSignOut}>Sign Out</button>
+        <Link to="/business/update">
+          <button>Update Profile</button>
+        </Link>
+        <Link to="/business/addJob">
+          <button>Add a Job</button>
+        </Link>
+      </div>
+    );
+  }
 };
 
 export default BusinessProfile;

@@ -64,7 +64,7 @@ const AdminSignup = () => {
     if(validate()) {
       setIsSubmitting(true);
       axios
-        .post("http://localhost:3000/admin/signup", user)
+        .post(process.env.REACT_APP_SERVER + "admin/signup", user)
         .then((response) => {
           console.log(response);
           setMessage(response.data.message);

@@ -10,6 +10,8 @@ import StudentUpdate from "./pages/student/update";
 import BusinessLogin from "./pages/business/login";
 import BusinessSignUp from "./pages/business/signup";
 import BusinessProfile from "./pages/business/profile";
+import BusinessUpdate from "./pages/business/update";
+import BusinessAddJob from "./pages/business/addJob";
 import AdminLogin from "./pages/admin/login";
 import AdminSignUp from "./pages/admin/signup";
 import AdminProfile from "./pages/admin/profile";
@@ -25,6 +27,8 @@ const routes = [
   { path: "/business/login", element: <BusinessLogin /> },
   { path: "/business/signUp", element: <BusinessSignUp /> },
   { path: "/business/profile", element: <BusinessProfile /> },
+  { path: "/business/update", element: <BusinessUpdate /> },
+  { path: "/business/addJob", element: <BusinessAddJob /> },
   { path: "/admin/login", element: <AdminLogin /> },
   { path: "/admin/signUp", element: <AdminSignUp /> },
   { path: "/admin/profile", element: <AdminProfile /> },

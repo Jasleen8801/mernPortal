@@ -21,7 +21,6 @@ const StudentProfile = () => {
       });
       const { student, message } = response.data;
       setUser(student);
-      setIsLoading(false);
     } catch (error) {
       if(
         error.response &&
@@ -71,6 +70,9 @@ const StudentProfile = () => {
         <button onClick={handleSignOut}>Signout</button>
         <Link to="/student/update">
           <button>Update Profile</button>
+        </Link>
+        <Link to="/jobListings">
+          <button>Job Listings</button>
         </Link>
         {error && {error}}
       </div>

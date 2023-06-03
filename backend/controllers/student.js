@@ -126,13 +126,16 @@ exports.updateProfile = async (req, res) => {
 
 exports.applyJob = async (req, res) => {
   const jobId = req.params.jobId;
+  const userId = req.query.userId;
+  console.log(userId);
 
   try {
     const job = await Job.findById(jobId);
     if (!job) {
       return res.status(400).send({ message: "Job not found" });
     }
-
+    
+    const student = await Student.findById(userId);
     student.application.push({ jobId: jobId });
     await student.save();
 

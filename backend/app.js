@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const student = require("./routes/student");
 const business = require("./routes/business");
 const admin = require("./routes/admin");
+const job = require("./routes/job");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -39,7 +40,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Connect to MongoDB");
+    console.log("Connected to MongoDB");
   })
   .catch((err) => {
     console.error("Connection error", err);
@@ -53,17 +54,20 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use(cookieParser());
+
+app.use("/student", student);
+app.use("/business", business);
+app.use("/admin", admin);
+app.use("/job", job);
+
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the server" });
 });
-app.use(cookieParser());
-app.use("/student",student);
-app.use("/business", business);
-app.use("/admin", admin);
 
-port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-

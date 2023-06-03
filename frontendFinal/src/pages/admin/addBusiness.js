@@ -22,7 +22,7 @@ const AdminAddBusiness = () => {
     };
 
     axios
-      .post("http://localhost:3000/admin/addBusiness", businessData)
+      .post(process.env.REACT_APP_SERVER + "admin/addBusiness", businessData)
       .then((response) => {
         setMessage(response.data.message);
         setCompanyName("");
