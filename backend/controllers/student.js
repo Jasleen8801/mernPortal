@@ -126,29 +126,40 @@ exports.updateProfile = async (req, res) => {
 
 exports.applyJob = async (req, res) => {
   const jobId = req.params.jobId;
-  const userId = req.query.userId;
-  console.log(userId);
+  const userId = req.body.userId;
 
   try {
     const job = await Job.findById(jobId);
-    if (!job) {
-      return res.status(400).send({ message: "Job not found" });
-    }
-    
     const student = await Student.findById(userId);
-    student.application.push({ jobId: jobId });
+
+    if (!job) {
+      return res.status(400).send({ message: 'Job not found' });
+    }
+
+    if (!student) {
+      return res.status(400).send({ message: 'Student not found' });
+    }
+
+    if (student.application.some(app => app.jobID.toString() === jobId)) {
+      return res.status(400).send({ message: 'Job already applied' });
+    }
+
+    student.application.push({ jobID: jobId });
     await student.save();
 
-    res.status(200).send({ message: "Applied for job successfully" });
+    job.applicants.push({ studentID: userId });
+    await job.save();
+
+    res.status(200).send({ message: 'Applied for job successfully' });
   } catch (err) {
     console.log(err);
-    res.status(500).send({ message: "Internal server error" });
+    res.status(500).send({ message: 'Internal server error' });
   }
 };
 
 exports.withdrawJob = async (req, res) => {
   const jobId = req.params.jobId;
-  const userId = req.user.id; // Assuming you have implemented authentication and can access the user's ID
+  const userId = req.user.id; 
 
   try {
     const student = await Student.findById(userId);
