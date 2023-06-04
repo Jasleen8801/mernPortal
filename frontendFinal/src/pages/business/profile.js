@@ -96,6 +96,7 @@ const BusinessProfile = () => {
                 Description: {job.description} <br />
                 Location: {job.location}
               </p>
+              <button>View Applicants</button>
               <button onClick={() => deleteJob(job._id)}>Delete Job</button>
             </div> 
           ))}{" "}

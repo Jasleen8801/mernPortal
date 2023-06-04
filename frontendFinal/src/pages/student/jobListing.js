@@ -87,9 +87,9 @@ const StudentJobListing = () => {
             <p>Description: {job.description}</p>
             <p>Posted by: {getBusinessName(job.company)}</p>
             <button onClick={() => applyForJob(job._id)}>Apply</button>
-            {message && <p>{message}</p>}
           </div>
         ))}
+        {message && <p>{message}</p>}
         <br />
         <Link to="/student/appliedJobs">
           <button>View Applied Jobs</button>

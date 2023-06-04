@@ -133,15 +133,15 @@ exports.applyJob = async (req, res) => {
     const student = await Student.findById(userId);
 
     if (!job) {
-      return res.status(400).send({ message: 'Job not found' });
+      return res.status(400).send({ message: "Job not found" });
     }
 
     if (!student) {
-      return res.status(400).send({ message: 'Student not found' });
+      return res.status(400).send({ message: "Student not found" });
     }
 
-    if (student.application.some(app => app.jobID.toString() === jobId)) {
-      return res.status(400).send({ message: 'Job already applied' });
+    if (student.application.some((app) => app.jobID.toString() === jobId)) {
+      return res.status(400).send({ message: "Job already applied" });
     }
 
     student.application.push({ jobID: jobId });
@@ -150,72 +150,76 @@ exports.applyJob = async (req, res) => {
     job.applicants.push({ studentID: userId });
     await job.save();
 
-    res.status(200).send({ message: 'Applied for job successfully' });
+    res.status(200).send({ message: "Applied for job successfully" });
   } catch (err) {
     console.log(err);
-    res.status(500).send({ message: 'Internal server error' });
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+exports.getAppliedJobs = async (req, res) => {
+  const token = req.query.cookieValue;
+
+  if (!token) {
+    return res.status(401).send({ message: "Unauthorized" });
+  }
+
+  try {
+    const data = jwt.verify(token, process.env.STUDENT_SECRET);
+    const userId = data.id;
+    // console.log(userId)
+    const student = await Student.findById(userId).populate(
+      "application.jobID"
+    );
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    const appliedJobs = student.application.map(
+      (application) => application.jobID
+    );
+    res.status(200).json({ appliedJobs });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 exports.withdrawJob = async (req, res) => {
   const jobId = req.params.jobId;
-  const userId = req.user.id; 
+  const token = req.query.cookieValue;
+
+  if (!token) {
+    return res.status(401).send({ message: "Unauthorized" });
+  }
 
   try {
+    const data = jwt.verify(token, process.env.STUDENT_SECRET);
+    const userId = data.id;
     const student = await Student.findById(userId);
     if (!student) {
       return res.status(400).send({ message: "Student not found" });
     }
 
-    const jobIndex = student.application.findIndex(
-      (application) => application.jobId === jobId
-    );
-    if (jobIndex === -1) {
+    const jobApplication = student.application.find(
+      (application) => application.jobID.toString() === jobId
+    );    
+    if (!jobApplication) {
       return res.status(400).send({ message: "Job application not found" });
     }
 
-    student.application.splice(jobIndex, 1);
+    student.application.pull(jobApplication._id);
     await student.save();
 
+    const job = await Job.findById(jobId);
+    if (!job) {
+      return res.status(400).send({ message: "Job not found" });
+    }
+
+    job.applicants.pull(student._id);
+    await job.save();
+
     res.status(200).send({ message: "Job application withdrawn successfully" });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: "Internal server error" });
-  }
-};
-
-exports.searchJobByName = async (req, res) => {
-  const { jobName } = req.params;
-
-  try {
-    const jobs = await Job.find({ title: { $regex: jobName, $options: "i" } });
-    res.status(200).send({ jobs: jobs, message: "Jobs found" });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: "Internal server error" });
-  }
-};
-
-exports.searchJobBySkills = async (req, res) => {
-  const { skills } = req.params;
-
-  try {
-    const jobs = await Job.find({ skillsRequired: { $in: skills.split(",") } });
-    res.status(200).send({ jobs: jobs, message: "Job search successful" });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: "Internal server error" });
-  }
-};
-
-exports.searchCompanyByName = async (req, res) => {
-  const { companyName } = req.params;
-
-  try {
-    const jobs = await Job.find({
-      company: { $regex: companyName, $options: "i" },
-    });
-    res.status(200).send({ jobs: jobs, message: "Jobs found" });
   } catch (err) {
     console.log(err);
     res.status(500).send({ message: "Internal server error" });

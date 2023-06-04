@@ -71,7 +71,7 @@ const StudentProfile = () => {
         <Link to="/student/update">
           <button>Update Profile</button>
         </Link>
-        <Link to="/jobListings">
+        <Link to="/student/jobListings">
           <button>Job Listings</button>
         </Link>
         {error && {error}}

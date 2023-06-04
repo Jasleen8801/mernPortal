@@ -11,3 +11,4 @@ exports.getJobs = async (req, res) => {
     res.status(500).send({ message: "Internal server error" });
   }
 };
+

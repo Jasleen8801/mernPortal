@@ -13,6 +13,7 @@ import BusinessSignUp from "./pages/business/signup";
 import BusinessProfile from "./pages/business/profile";
 import BusinessUpdate from "./pages/business/update";
 import BusinessAddJob from "./pages/business/addJob";
+import BusinessApplicantList from "./pages/business/applicantList";
 import AdminLogin from "./pages/admin/login";
 import AdminSignUp from "./pages/admin/signup";
 import AdminProfile from "./pages/admin/profile";
@@ -31,6 +32,7 @@ const routes = [
   { path: "/business/profile", element: <BusinessProfile /> },
   { path: "/business/update", element: <BusinessUpdate /> },
   { path: "/business/addJob", element: <BusinessAddJob /> },
+  { path: "/business/applicantList", element: <BusinessApplicantList /> },
   { path: "/admin/login", element: <AdminLogin /> },
   { path: "/admin/signUp", element: <AdminSignUp /> },
   { path: "/admin/profile", element: <AdminProfile /> },
