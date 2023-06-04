@@ -18,6 +18,9 @@ import AdminLogin from "./pages/admin/login";
 import AdminSignUp from "./pages/admin/signup";
 import AdminProfile from "./pages/admin/profile";
 import AdminAddBusiness from "./pages/admin/addBusiness";
+import CustomStudentProfile from "./pages/custom/studentProfile";
+import CustomBusinessProfile from "./pages/custom/businessProfile";
+import CustomJobProfile from "./pages/custom/jobProfile";
 
 const routes = [
   { path: "/", element: <LandingPage /> },
@@ -37,6 +40,9 @@ const routes = [
   { path: "/admin/signUp", element: <AdminSignUp /> },
   { path: "/admin/profile", element: <AdminProfile /> },
   { path: "/admin/addBusiness", element: <AdminAddBusiness /> },
+  { path: "/custom/student/:studentId", element: <CustomStudentProfile /> },
+  { path: "/custom/business/:businessId", element: <CustomBusinessProfile /> },
+  { path: "/custom/job/:jobId", element: <CustomJobProfile /> },
 ];
 
 function App() {
@@ -44,7 +50,7 @@ function App() {
     <Router>
       <Routes>
         {routes.map((route, index) => (
-          <Route key={index} path={route.path} element={route.element} />
+          <Route exact key={index} path={route.path} element={route.element} />
         ))}
       </Routes>
     </Router>

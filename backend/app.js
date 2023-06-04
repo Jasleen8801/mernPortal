@@ -10,6 +10,7 @@ const student = require("./routes/student");
 const business = require("./routes/business");
 const admin = require("./routes/admin");
 const job = require("./routes/job");
+const custom = require("./routes/custom");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -61,6 +62,7 @@ app.use("/student", student);
 app.use("/business", business);
 app.use("/admin", admin);
 app.use("/job", job);
+app.use("/custom", custom);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the server" });

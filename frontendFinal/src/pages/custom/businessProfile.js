@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const CustomStudentProfile = () => {
-  const { studentId } = useParams();
+const CustomBusinessProfile = () => {
+  const { businessId } = useParams();
 
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
@@ -13,10 +13,10 @@ const CustomStudentProfile = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        process.env.REACT_APP_SERVER + `custom/getStudent/${studentId}`
+        process.env.REACT_APP_SERVER + `custom/getBusiness/${businessId}`
       );
-      setUser(response.data.student);
-      // console.log(response.data.student);
+      setUser(response.data.business);
+      // console.log(response.data.business);
     } catch (error) {
       setError(error.response.data.message);
     }
@@ -36,18 +36,16 @@ const CustomStudentProfile = () => {
   } else {
     return (
       <div className="container">
-        <h1>Student Profile</h1>
-        <p className="lead">Welcome {user.userName}</p>
-        <p className="lead">Email: {user.email}</p>
-        <p className="lead">Skills: {user.skills}</p>
-        <p className="lead">Description: {user.description}</p>
-        <Link to="/">
-          <button>Promo Page</button>
-        </Link>
+        <h1>Business Profile</h1>
+        <div>
+          <h3>Company Name: {user.userName}</h3>
+          <p>Email: {user.email}</p>
+          <p>userId: {user._id}</p>
+        </div>
         {error && { error }}
       </div>
     );
   }
 };
 
-export default CustomStudentProfile;
+export default CustomBusinessProfile;
