@@ -103,10 +103,10 @@ exports.addBusiness = async (req, res) => {
 
   try {
     const userExists = await Business.findOne({ userName: companyName });
-    
+
     if (userExists) {
       return res.status(400).send({ message: "User already exists" });
-    } 
+    }
 
     const passKey = Math.random().toString(36).slice(-8);
     const hashedPassword = await bcrypt.hash(passKey, 12);
@@ -118,7 +118,9 @@ exports.addBusiness = async (req, res) => {
     });
 
     await business.save();
-    res.status(201).send({ message: `Business created successfully. Passkey is ${passKey}` });
+    res.status(201).send({
+      message: `Business created successfully. Passkey is ${passKey}`,
+    });
   } catch (error) {
     console.log(err);
     res.status(500).send({ message: "Internal server error" });
@@ -126,40 +128,70 @@ exports.addBusiness = async (req, res) => {
 };
 
 // to delete a job posting
-exports.deleteJob = (req, res) => {
+exports.deleteJob = async (req, res) => {
   const jobId = req.params.jobId;
 
-  Job.findByIdAndDelete(jobId)
-    .then((result) => {
-      res.status(200).send({ message: "Job deleted successfully" });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send({ message: "Internal server error" });
-    });
+  try {
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+
+    await Student.updateMany(
+      { _id: { $in: job.applicants.map((applicant) => applicant.studentID) } },
+      { $pull: { appliedJobs: { jobID: jobId } } }
+    );
+
+    await Business.updateOne({ _id: job.company }, { $pull: { jobs: jobId } });
+
+    await Job.findByIdAndDelete(jobId);
+
+    res
+      .status(200)
+      .json({ message: "Job and related data deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 // to delete a student profile
-exports.deleteStudent = (req, res) => {
+exports.deleteStudent = async (req, res) => {
   const studentId = req.params.studentId;
 
-  Student.findByIdAndDelete(studentId)
-    .then((result) => {
-      res.status(200).send({ message: "Student deleted successfully" });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send({ message: "Internal server error" });
-    });
+  try {
+    const deletedStudent = await Student.findByIdAndDelete(studentId);
+
+    await Job.updateMany(
+      { "applicants.studentID": studentId },
+      { $pull: { applicants: { studentID: studentId } } }
+    );
+
+    res.status(200).send({ message: "Student deleted successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
 };
 
 // to delete a business profile
 exports.deleteBusiness = (req, res) => {
   const businessId = req.params.businessId;
 
+  // Delete the business
   Business.findByIdAndDelete(businessId)
     .then((result) => {
-      res.status(200).send({ message: "Business deleted successfully" });
+      Job.deleteMany({ company: businessId })
+        .then(() => {
+          res.status(200).send({
+            message: "Business and related jobs deleted successfully",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).send({ message: "Internal server error" });
+        });
     })
     .catch((err) => {
       console.log(err);

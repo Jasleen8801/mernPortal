@@ -51,10 +51,11 @@ exports.postLogin = async (req, res) => {
   }
 };
 
-exports.postCompleteProfile = async (req, res) => {
+exports.updateProfile = async (req, res) => {
   const {
+    userName,
     companyName,
-    password,
+    email,
     companyDescription,
     companyLocation,
     website,
@@ -64,32 +65,37 @@ exports.postCompleteProfile = async (req, res) => {
     contactEmail,
     contactNumber,
   } = req.body;
+  const businessId = req.params.businessId;
 
   try {
-    const business = await Business.findOne({ companyName: companyName });
-    if (!business) {
-      return res.status(400).send({ message: "No such business exists" });
+    const updatedBusiness = await Business.findByIdAndUpdate(
+      businessId,
+      {
+        userName,
+        companyName,
+        email,
+        companyDescription,
+        companyLocation,
+        website,
+        industry,
+        companySize,
+        foundedYear,
+        contactEmail,
+        contactNumber,
+      },
+      { new: true }
+    );
+
+    if (!updatedBusiness) {
+      return res.status(400).send({ message: "Business not found" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    business.password = hashedPassword;
-    business.companyDescription = companyDescription;
-    business.companyLocation = companyLocation;
-    business.website = website;
-    business.industry = industry;
-    business.companySize = companySize;
-    business.foundedYear = foundedYear;
-    business.contactEmail = contactEmail;
-    business.contactNumber = contactNumber;
-
-    await business.save();
-
-    res
-      .status(200)
-      .send({ message: "Business profile completed successfully" });
-  } catch (err) {
-    console.log(err);
+    res.json({
+      message: "Business updated successfully",
+      business: updatedBusiness,
+    });
+  } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Internal server error" });
   }
 };
@@ -166,17 +172,27 @@ exports.deleteJobPosting = async (req, res) => {
   }
 };
 
-
 exports.getApplicants = async (req, res) => {
+  const businessId = req.params.businessId;
   const jobId = req.params.jobId;
 
-  const job = await Job.findById(jobId);
+  try {
+    const job = await Job.findById(jobId);
 
-  if (!job || !job.company.equals(req.business._id)) {
-    return res.status(400).send({ message: "No such job posting exists" });
+    if (!job || !job.company.equals(businessId)) {
+      return res.status(400).send({ message: "No such job posting exists" });
+    }
+
+    if (!Array.isArray(job.applicants)) {
+      return res.status(400).send({ message: "No applicants found" });
+    }
+
+    const studentIds = job.applicants.map(applicant => applicant.studentId);
+    const applicants = await Student.find({ _id: { $in: studentIds } });
+    
+    res.status(200).send({ applicants, message: "Success" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal server error" });
   }
-
-  const applicants = await Student.find({ "application.jobId": jobId });
-
-  res.status(200).send({ applicants: applicants, message: "Success" });
 };

@@ -35,7 +35,7 @@ const routes = [
   { path: "/business/profile", element: <BusinessProfile /> },
   { path: "/business/update", element: <BusinessUpdate /> },
   { path: "/business/addJob", element: <BusinessAddJob /> },
-  { path: "/business/applicantList", element: <BusinessApplicantList /> },
+  { path: "/business/applicantList/:jobId", element: <BusinessApplicantList /> },
   { path: "/admin/login", element: <AdminLogin /> },
   { path: "/admin/signUp", element: <AdminSignUp /> },
   { path: "/admin/profile", element: <AdminProfile /> },

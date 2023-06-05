@@ -41,6 +41,66 @@ const AdminProfile = () => {
     setIsLoading(false);
   };
 
+  const deleteStudent = async (studentId) => {
+    try {
+      const url = process.env.REACT_APP_SERVER + `admin/student/${studentId}`;
+      await axios.delete(url);
+  
+      setJobs((prevJobs) =>
+        prevJobs.map((job) => ({
+          ...job,
+          applicants: job.applicants.filter(
+            (applicant) => applicant.studentID !== studentId
+          ),
+        }))
+      );
+  
+      setStudents((prevStudents) =>
+        prevStudents.filter((student) => student._id !== studentId)
+      );
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  };
+
+  const deleteBusiness = async (businessId) => {
+    try {
+      const url = process.env.REACT_APP_SERVER + `admin/business/${businessId}`;
+      await axios.delete(url);
+      setBusinesses((prevBusinesses) =>
+        prevBusinesses.filter((business) => business._id !== businessId)
+      );
+      setJobs((prevJobs) =>
+        prevJobs.filter((job) => job.company !== businessId)
+      );
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  };  
+
+  const deleteJob = async (jobId) => {
+    try {
+      const url = process.env.REACT_APP_SERVER + `admin/deleteJob/${jobId}`;
+      await axios.delete(url);
+  
+      setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
+  
+      setBusinesses((prevBusiness) => ({
+        ...prevBusiness,
+        jobs: prevBusiness.jobs.filter((job) => job._id !== jobId)
+      }));
+  
+      setStudents((prevStudents) =>
+        prevStudents.map((student) => ({
+          ...student,
+          appliedJobs: student.appliedJobs.filter((job) => job._id !== jobId)
+        }))
+      );
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+  };  
+
   const handleSignOut = (e) => {
     e.preventDefault();
     Cookies.remove("jwtAdmin");
@@ -74,8 +134,9 @@ const AdminProfile = () => {
         {students.length > 0 ? (
           <ul>
             {students.map((student) => (
-              <li key={student.id}>
+              <li key={student._id}>
                 <p>Username: {student.userName}</p>
+                <button onClick={() => deleteStudent(student._id)}></button>
                 {/* Display other student data as needed */}
               </li>
             ))}
@@ -88,8 +149,9 @@ const AdminProfile = () => {
         {businesses.length > 0 ? (
           <ul>
             {businesses.map((business) => (
-              <li key={business.id}>
+              <li key={business._id}>
                 <p>Name: {business.userName}</p>
+                <button onClick={() => deleteBusiness(business._id)}></button>
               </li>
             ))}
           </ul>
@@ -103,6 +165,7 @@ const AdminProfile = () => {
             {jobs.map((job) => (
               <li key={job.id}>
                 <p>Title: {job.title}</p>
+                <button onClick={() => deleteJob(job._id)}></button>
                 {/* Display other job data as needed */}
               </li>
             ))}
