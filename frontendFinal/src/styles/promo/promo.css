@@ -1,0 +1,53 @@
+.promo-container--main {
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  scrollbar-width: none;
+  color: white;
+  background: url('https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg?size=626&ext=jpg');
+  background-size: cover;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Header Section */
+
+.promo-section--header {
+  height: 100vh;
+  scroll-snap-align: center;
+}
+
+/* About Section */
+
+.promo-section--about {
+  height: 100vh;
+  scroll-snap-align: center;
+}
+
+/* Works Section */
+
+.promo-section--works {
+  height: 100vh;
+  scroll-snap-align: center;
+}
+
+/* Contact Section */
+
+.promo-section--contact {
+  height: 100vh;
+  scroll-snap-align: center;
+}
+
+/* Common */
+
+.navbar--logo {
+  height: 60px;
+  padding-top: 2px;
+}
+
+.navbar-toggler-white .navbar-toggler-icon {
+  color: white;
+}

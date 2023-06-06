@@ -83,9 +83,9 @@ const StudentJobListing = () => {
         <h1>All Jobs</h1>
         {jobs.map((job) => (
           <div key={job._id}>
-            <h3>{job.title}</h3>
+            <Link to={`/custom/job/${job._id}`}><h3>{job.title}</h3></Link>
             <p>Description: {job.description}</p>
-            <p>Posted by: {getBusinessName(job.company)}</p>
+            <Link to={`/custom/business/${job.company}`}><p>Posted by: {getBusinessName(job.company)}</p></Link>
             <button onClick={() => applyForJob(job._id)}>Apply</button>
           </div>
         ))}

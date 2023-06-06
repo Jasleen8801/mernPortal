@@ -56,18 +56,17 @@ const BusinessApplicantList = () => {
   
   return (
     <div>
-      <h1 className='text-error'>TO BE DONE</h1>
-      {/* <h1>Applicants for Job ID: {jobId}</h1> */}
+      <h1>Applicants List</h1>
       {applicants.length === 0 ? (
         <p>No applicants found.</p>
       ) : (
         <ul>
           {applicants.map((applicant) => (
             <li key={applicant._id}>
-              <h3>{applicant.name}</h3>
+              <h3>{applicant.userName}</h3>
               <p>Email: {applicant.email}</p>
-              <p>Skills: {applicant.skills.join(', ')}</p>
-              <Link to={`/student/${applicant._id}`}>View Profile</Link>
+              <p>Skills: {applicant.skills}</p>
+              <Link to={`/custom/student/${applicant._id}`}>View Profile</Link>
             </li>
           ))}
         </ul>

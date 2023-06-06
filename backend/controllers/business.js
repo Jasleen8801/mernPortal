@@ -183,16 +183,20 @@ exports.getApplicants = async (req, res) => {
       return res.status(400).send({ message: "No such job posting exists" });
     }
 
-    if (!Array.isArray(job.applicants)) {
+    // console.log(job.applicants);
+
+    const applicantIds = job.applicants.map(applicant => applicant.studentID); // Update property name here
+    // console.log(applicantIds);
+    const applicants = await Student.find({ _id: { $in: applicantIds } });
+
+    if (!applicants || applicants.length === 0) {
       return res.status(400).send({ message: "No applicants found" });
     }
 
-    const studentIds = job.applicants.map(applicant => applicant.studentId);
-    const applicants = await Student.find({ _id: { $in: studentIds } });
-    
     res.status(200).send({ applicants, message: "Success" });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal server error" });
   }
 };
+

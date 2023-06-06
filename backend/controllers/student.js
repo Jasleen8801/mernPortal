@@ -95,6 +95,8 @@ exports.updateProfile = async (req, res) => {
   } = req.body;
   const userId = req.params.userId;
 
+  console.log(projects)
+
   try {
     const updatedStudent = await Student.findByIdAndUpdate(
       userId,
@@ -109,6 +111,8 @@ exports.updateProfile = async (req, res) => {
       },
       { new: true }
     );
+
+    console.log(updatedStudent)
 
     if (!updatedStudent) {
       return res.status(400).send({ message: "Student not found" });

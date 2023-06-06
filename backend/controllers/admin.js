@@ -198,37 +198,3 @@ exports.deleteBusiness = (req, res) => {
       res.status(500).send({ message: "Internal server error" });
     });
 };
-
-// to get all the jobs posted by a company
-exports.getJobByCompany = (req, res) => {
-  const companyName = req.params.companyName;
-
-  Job.find({ companyName: companyName })
-    .then((result) => {
-      res.status(200).send({ jobs: result, message: "Success" });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send({ message: "Internal server error" });
-    });
-};
-
-// to get all the applicants for a job posting
-exports.getApplicantsByJob = (req, res) => {
-  const jobId = req.params.jobId;
-
-  Job.findById(jobId)
-    .populate("applicants", "userName email")
-    .then((result) => {
-      if (!result) {
-        return res.status(400).send({ message: "No such job exists" });
-      }
-      res
-        .status(200)
-        .send({ applicants: result.applicants, message: "Success" });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send({ message: "Internal server error" });
-    });
-};
