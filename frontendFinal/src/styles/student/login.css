@@ -1,0 +1,139 @@
+.student-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom, #111, #000);
+}
+
+.student-login-box {
+  width: 400px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.student-login-title {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.student-login-alert {
+  margin-bottom: 20px;
+  padding: 10px;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  border-radius: 5px;
+}
+
+.student-login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.student-login-user-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.student-login-input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #999;
+  outline: none;
+  background: transparent;
+  color: #fff;
+}
+
+.student-login-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 16px;
+  padding: 10px 0;
+  transition: all 0.5s ease;
+  pointer-events: none;
+  color: #888;
+}
+
+.student-login-input:focus ~ .student-login-label,
+.student-login-input:not(:placeholder-shown) ~ .student-login-label {
+  top: -20px;
+  left: 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+.student-login-password-icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.student-login-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.student-login-button:hover {
+  background-color: #0056b3;
+}
+
+.student-login-button+.student-login-button {
+  margin-top: 10px;
+  background-color: #28a745;
+}
+
+.student-login-button+.student-login-button:hover {
+  background-color: #1a682c;
+}
+
+.student-login-button,
+.student-login-button+.student-login-button {
+  transition: background-color 0.3s ease;
+}
+
+.student-login-link-button {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.student-signup-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.student-signup-button:hover {
+  background-color: #b02a37;
+}
+
+.student-login-button+.student-signup-button {
+  margin-top: 10px;
+  background-color: #28a745;
+}
+
+.student-login-button+.student-signup-button:hover {
+  background-color: #1a682c;
+}
