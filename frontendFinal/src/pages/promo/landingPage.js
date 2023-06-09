@@ -1,7 +1,6 @@
 // to be completed in - https://youtu.be/qALsVa-V9qo
 
 import React from "react";
-import { IonIcon } from "react-ion-icon";
 
 import "../../styles/promo/promo.css";
 
@@ -243,116 +242,101 @@ const LandingPage = () => {
       </div>
 
       <div className="promo-section--works">
-        <div className="wavy-background">
-          <div className="wave"></div>
-        </div>
         <div className="work-container">
-          <div className="work-card" style={{ "--clr": "#C2DEDC" }}>
-            <div className="work-box">
-              <div className="work-icon">
-                <div className="work-iconbox">
-                  <IonIcon name="people-circle-outline"></IonIcon>
-                </div>
+          <div className="work-card">
+            <div className="work-content">
+              <div className="work-img">
+                <img src="https://images.unsplash.com/photo-1592188657297-c6473609e988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c3R1ZGVudHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" />
               </div>
-              <div className="work-content">
-                <h3>Startups</h3>
-                <p>
-                  Find talented individuals, collaborate on projects, and
-                  accelerate your growth.
-                </p>
-                <a href="/business/login">Login</a>
+              <div className="work-cardContent">
+                <h3>
+                  Student?
+                  <br />
+                  <span>Kickstart your career.</span>
+                </h3>
               </div>
             </div>
-          </div>
-
-          <div className="work-card" style={{ "--clr": "#C2DEDC" }}>
-            <div className="work-box">
-              <div className="work-icon">
-                <div className="work-iconbox">
-                  <IonIcon name="person-circle-outline"></IonIcon>
-                </div>
-              </div>
-              <div className="work-content">
-                <h3>Students</h3>
-                <p>
-                  Unlock internship opportunities, gain real-world experience,
-                  and kickstart your career.
-                </p>
+            <ul className="work-sci">
+              <li style={{ "--i": 1 }}>
                 <a href="/student/login">Login</a>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
-
-          <div className="work-card" style={{ "--clr": "#C2DEDC" }}>
-            <div className="work-box">
-              <div className="work-icon">
-                <div className="work-iconbox">
-                  <IonIcon name="people-circle-outline"></IonIcon>
-                </div>
+          <div className="work-card">
+            <div className="work-content">
+              <div className="work-img">
+                <img src="https://images.unsplash.com/photo-1589561253898-768105ca91a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3RhcnQlMjB1cHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" />
               </div>
-              <div className="work-content">
-                <h3>Business Ventures</h3>
-                <p>
-                  Discover new ventures, connect with entrepreneurs, and drive
-                  innovation and success.
-                </p>
-                <a href="#"> (Coming Soon)</a>
+              <div className="work-cardContent">
+                <h3>
+                  Start up?
+                  <br />
+                  <span>Accelerate your growth</span>
+                </h3>
               </div>
             </div>
+            <ul className="work-sci">
+              <li style={{ "--i": 1 }}>
+                <a href="/business/login">Login</a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
       <div className="promo-section--contact">
-        <div class="background">
-          <div class="contact-container">
-            <div class="screen">
-              <div class="screen-header">
-                <div class="screen-header-left">
-                  <div class="screen-header-button close"></div>
-                  <div class="screen-header-button maximize"></div>
-                  <div class="screen-header-button minimize"></div>
+        <div className="background">
+          <div className="contact-container">
+            <div className="screen">
+              <div className="screen-header">
+                <div className="screen-header-left">
+                  <div className="screen-header-button close"></div>
+                  <div className="screen-header-button maximize"></div>
+                  <div className="screen-header-button minimize"></div>
                 </div>
-                <div class="screen-header-right">
-                  <div class="screen-header-ellipsis"></div>
-                  <div class="screen-header-ellipsis"></div>
-                  <div class="screen-header-ellipsis"></div>
+                <div className="screen-header-right">
+                  <div className="screen-header-ellipsis"></div>
+                  <div className="screen-header-ellipsis"></div>
+                  <div className="screen-header-ellipsis"></div>
                 </div>
               </div>
-              <div class="screen-body">
-                <div class="screen-body-item left">
-                  <div class="app-title">
+              <div className="screen-body">
+                <div className="screen-body-item left">
+                  <div className="app-title">
                     <span>CONTACT</span>
                     <span>US</span>
                   </div>
-                  <div class="app-contact">
+                  <div className="app-contact">
                     CONTACT INFO : +62 81 314 928 595
                   </div>
                 </div>
-                <div class="screen-body-item">
-                  <div class="app-form">
-                    <div class="app-form-group">
+                <div className="screen-body-item">
+                  <div className="app-form">
+                    <div className="app-form-group">
                       <input
-                        class="app-form-control"
+                        className="app-form-control"
                         placeholder="NAME"
                         value="BEAN TO BOND"
                       />
                     </div>
-                    <div class="app-form-group">
-                      <input class="app-form-control" placeholder="EMAIL" />
+                    <div className="app-form-group">
+                      <input className="app-form-control" placeholder="EMAIL" />
                     </div>
-                    <div class="app-form-group">
+                    <div className="app-form-group">
                       <input
-                        class="app-form-control"
+                        className="app-form-control"
                         placeholder="CONTACT NO"
                       />
                     </div>
-                    <div class="app-form-group message">
-                      <input class="app-form-control" placeholder="MESSAGE" />
+                    <div className="app-form-group message">
+                      <input
+                        className="app-form-control"
+                        placeholder="MESSAGE"
+                      />
                     </div>
-                    <div class="app-form-group buttons">
-                      <button class="app-form-button">CANCEL</button>
-                      <button class="app-form-button">SEND</button>
+                    <div className="app-form-group buttons">
+                      <button className="app-form-button">CANCEL</button>
+                      <button className="app-form-button">SEND</button>
                     </div>
                   </div>
                 </div>
