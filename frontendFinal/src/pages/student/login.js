@@ -73,7 +73,7 @@ const StudentLogin = () => {
           >
             <ul className="navbar-nav">
               <li className="nav-item active">
-                <Link className="nav-link" to="/promo">
+                <Link className="nav-link" to="/">
                   Promo Page
                 </Link>
               </li>

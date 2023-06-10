@@ -4,6 +4,9 @@
   align-items: center;
   height: 100vh;
   background: linear-gradient(to bottom, #111, #000);
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scroll-snap-align: center;
 }
 
 .student-login-box {
