@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import "../../styles/student/profile.css";
+import logo from "../../assets/logo.png";
 
 const StudentProfile = () => {
   const [user, setUser] = useState({});
@@ -16,13 +18,16 @@ const StudentProfile = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(process.env.REACT_APP_SERVER + "student/home", {
-        params: { cookieValue: cookie }
-      });
+      const response = await axios.get(
+        process.env.REACT_APP_SERVER + "student/home",
+        {
+          params: { cookieValue: cookie },
+        }
+      );
       const { student, message } = response.data;
       setUser(student);
     } catch (error) {
-      if(
+      if (
         error.response &&
         error.response.status >= 400 &&
         error.response.staus <= 500
@@ -34,7 +39,7 @@ const StudentProfile = () => {
       }
     }
     setIsLoading(false);
-  }
+  };
 
   const handleSignOut = (e) => {
     e.preventDefault();
@@ -52,32 +57,84 @@ const StudentProfile = () => {
     }
   }, [cookie, navigate]);
 
-
   if (!isLoggedIn) {
     navigate("/student/login");
   } else if (isLoading) {
-    return <div className='container'>
-      <p className='lead'>Loading...</p>
-    </div>
+    return (
+      <div className="container">
+        <p className="lead">Loading...</p>
+      </div>
+    );
   } else {
     return (
-      <div className='container'>
-        <h1>Student Profile</h1>
-        <p className='lead'>Welcome {user.userName}</p>
-        <p className='lead'>Email: {user.email}</p>
-        <p className='lead'>Skills: {user.skills}</p>
-        <p className='lead'>Description: {user.description}</p>
-        <button onClick={handleSignOut}>Signout</button>
-        <Link to="/student/update">
-          <button>Update Profile</button>
-        </Link>
-        <Link to="/student/jobListings">
-          <button>Job Listings</button>
-        </Link>
-        {error && {error}}
-      </div>
-    )
+      <>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div className="container">
+            <Link className="navbar-brand" to="/">
+              <img src={logo} alt="logo" className="navbar--logo" />
+            </Link>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div
+              className="collapse navbar-collapse justify-content-end"
+              id="navbarSupportedContent"
+            >
+              <ul className="navbar-nav">
+                <li className="nav-item active">
+                  <Link className="nav-link" to="/">
+                    Promo Page
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div className="student-profile-container">
+          <div className="container">
+            <h1 className="student-profile-heading">Welcome {user.userName}</h1>
+            <p className="student-profile-lead">Email: {user.email}</p>
+            <p className="student-profile-lead">Skills: {user.skills}</p>
+            <p className="student-profile-lead">
+              Description: {user.description}
+            </p>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                onClick={handleSignOut}
+              >
+                Signout
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                onClick={() => navigate("/student/update")}
+              >
+                Update Profile
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                onClick={() => navigate("/student/jobListings")}
+              >
+                Job Listings
+              </button>
+            </div>
+          </div>
+          {error && <p className="student-profile-error">{error}</p>}
+        </div>
+      </>
+    );
   }
-}
+};
 
-export default StudentProfile
+export default StudentProfile;
