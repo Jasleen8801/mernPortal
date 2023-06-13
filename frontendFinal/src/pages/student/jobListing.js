@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import "../../styles/student/jobListing.css";
 
 const StudentJobListing = () => {
   const [jobs, setJobs] = useState([]);
@@ -79,25 +80,62 @@ const StudentJobListing = () => {
     );
   } else {
     return (
-      <div className="container">
-        <h1>All Jobs</h1>
-        {jobs.map((job) => (
-          <div key={job._id}>
-            <Link to={`/custom/job/${job._id}`}><h3>{job.title}</h3></Link>
-            <p>Description: {job.description}</p>
-            <Link to={`/custom/business/${job.company}`}><p>Posted by: {getBusinessName(job.company)}</p></Link>
-            <button onClick={() => applyForJob(job._id)}>Apply</button>
+      <div className="student-job-listing-container">
+        <div className="container">
+          <h1 className="student-job-listing-heading">Job Listings</h1>
+          <div className="student-job-listings-gradient-cards">
+            {jobs.map((job) => (
+              <div key={job._id} className="student-job-listings-card">
+                <div className="student-job-listings-container-card">
+                  <Link
+                    to={`/custom/job/${job._id}`}
+                    className="student-job-listings-link"
+                  >
+                    <h3>{job.title}</h3>
+                  </Link>
+                  <p>Description: {job.description}</p>
+                  <Link
+                    to={`/custom/business/${job.company}`}
+                    className="student-job-listings-link"
+                  >
+                    <p>Posted by: {getBusinessName(job.company)}</p>
+                  </Link>
+                  <button
+                    onClick={() => applyForJob(job._id)}
+                    className="btn btn-outline-secondary"
+                  >
+                    Apply
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-        {message && <p>{message}</p>}
-        <br />
-        <Link to="/student/appliedJobs">
-          <button>View Applied Jobs</button>
-        </Link>
-        <Link to="/student/profile">
-          <button>View Profile</button>
-        </Link>
-        <button onClick={handleSignOut}>Sign Out</button>
+          {message && <p>{message}</p>}
+          <br />
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onClick={handleSignOut}
+            >
+              Signout
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onClick={() => navigate("/student/appliedJobs")}
+            >
+              Applied Jobs
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onClick={() => navigate("/student/profile")}
+            >
+              Profile
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
