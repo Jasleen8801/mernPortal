@@ -14,6 +14,7 @@ import BusinessProfile from "./pages/business/profile";
 import BusinessUpdate from "./pages/business/update";
 import BusinessAddJob from "./pages/business/addJob";
 import BusinessApplicantList from "./pages/business/applicantList";
+import BusinessSuccess from "./pages/business/success";
 import AdminLogin from "./pages/admin/login";
 import AdminSignUp from "./pages/admin/signup";
 import AdminProfile from "./pages/admin/profile";
@@ -36,6 +37,7 @@ const routes = [
   { path: "/business/update", element: <BusinessUpdate /> },
   { path: "/business/addJob", element: <BusinessAddJob /> },
   { path: "/business/applicantList/:jobId", element: <BusinessApplicantList /> },
+  { path: "/business/success", element: <BusinessSuccess />},
   { path: "/admin/login", element: <AdminLogin /> },
   { path: "/admin/signUp", element: <AdminSignUp /> },
   { path: "/admin/profile", element: <AdminProfile /> },

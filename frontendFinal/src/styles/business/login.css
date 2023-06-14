@@ -1,0 +1,164 @@
+.business-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom, #111, #000);
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scroll-snap-align: center;
+}
+
+.business-login-box {
+  width: 400px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.business-login-title {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.business-login-alert {
+  margin-bottom: 20px;
+  padding: 10px;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  border-radius: 5px;
+}
+
+.business-login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.business-login-user-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.business-login-input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #999;
+  outline: none;
+  background: transparent;
+  color: #fff;
+}
+
+.business-login-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 16px;
+  padding: 10px 0;
+  transition: all 0.5s ease;
+  pointer-events: none;
+  color: #888;
+}
+
+.business-login-input:focus ~ .business-login-label,
+.business-login-input:not(:placeholder-shown) ~ .business-login-label {
+  top: -20px;
+  left: 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+.business-login-password-icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #f5c6cb;
+}
+
+.business-login-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.business-login-button:hover {
+  background-color: #0056b3;
+}
+
+.business-login-button + .business-login-button {
+  margin-top: 10px;
+  background-color: #28a745;
+}
+
+.business-login-button + .business-login-button:hover {
+  background-color: #1a682c;
+}
+
+.business-login-button,
+.business-login-button + .business-login-button {
+  transition: background-color 0.3s ease;
+}
+
+.business-login-link-button {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.business-signup-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.business-signup-button:hover {
+  background-color: #b02a37;
+}
+
+.business-login-button + .business-signup-button {
+  margin-top: 10px;
+  background-color: #28a745;
+}
+
+.business-login-button + .business-signup-button:hover {
+  background-color: #1a682c;
+}
+
+.business-login-input[type="file"]::-webkit-file-upload-button {
+  padding: 0.5rem 1rem;
+  background-color: #333333;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.business-login-input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #555555;
+}
+
+.business-login-input[type="file"]::-webkit-file-upload-button:active {
+  background-color: #222222;
+}
+
+.business-login-input[type="file"]::-webkit-file-upload-button:focus {
+  outline: none;
+}

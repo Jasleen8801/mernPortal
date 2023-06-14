@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import emailjs from 'emailjs-com';
+import "../../styles/business/login.css";
+import logo from "../../assets/logo.png";
 
 const BusinessSignup = () => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [document, setDocument] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
@@ -47,10 +52,93 @@ const BusinessSignup = () => {
       .catch((error) => {
         console.error('Error sending email:', error);
       });
+      
+      navigate('/business/success');
   };
 
   return (
-    <div>
+    <>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container">
+          <Link className="navbar-brand" to="/">
+            <img src={logo} alt="logo" className="navbar--logo" />
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div
+            className="collapse navbar-collapse justify-content-end"
+            id="navbarSupportedContent"
+          >
+            <ul className="navbar-nav">
+              <li className="nav-item active">
+                <Link className="nav-link" to="/">
+                  Promo Page
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div className='business-login-container'>
+        <div className='business-login-box'>
+          <h2 className='business-login-title'>Business Signup</h2>
+          <form className='business-login-form' onSubmit={handleFormSubmit}>
+            <div className='business-login-user-box'>
+              <input
+                className="business-login-input"
+                type='text'
+                id='userName'
+                value={userName}
+                onChange={handleUserNameChange}
+                required
+              />
+              <label className='business-login-label'>User Name</label>
+            </div>
+            <div className='business-login-user-box'>
+              <input
+                className="business-login-input"
+                type='email'
+                id='email'
+                value={email}
+                onChange={handleEmailChange}
+                required
+              />
+              <label className='business-login-label'>Email</label>
+            </div>
+            <div className='business-login-user-box'>
+              <input
+                className="business-login-input"
+                type='file'
+                id='document'
+                onChange={handleDocumentChange}
+              />
+              <label className='business-login-label'>Document</label>
+            </div>
+            <button type="submit" className='business-login-button'>
+              Signup
+            </button>
+            <Link to="/business/login" className='business-login-link-button'>
+              <button className='business-signup-button'>Login</button>
+            </Link>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default BusinessSignup;
+
+/*<div>
       <h1>Business Signup</h1>
       <form onSubmit={handleFormSubmit}>
         <div>
@@ -81,8 +169,4 @@ const BusinessSignup = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
-    </div>
-  );
-};
-
-export default BusinessSignup;
+    </div> */

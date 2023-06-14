@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import "../../styles/business/login.css";
+
+import logo from "../../assets/logo.png";
 
 const BusinessLogin = () => {
   const [error, setError] = useState("");
@@ -48,40 +51,72 @@ const BusinessLogin = () => {
   
   return (
     <>
-      <div className="container">
-        <div className="login-box">
-          <h2>Business Login</h2>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container">
+          <Link className="navbar-brand" to="/">
+            <img src={logo} alt="logo" className="navbar--logo" />
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div
+            className="collapse navbar-collapse justify-content-end"
+            id="navbarSupportedContent"
+          >
+            <ul className="navbar-nav">
+              <li className="nav-item active">
+                <Link className="nav-link" to="/">
+                  Promo Page
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div className='business-login-container'>
+        <div className='business-login-box'>
+          <h2 className='business-login-title'>Business Login</h2>
           {error && <div className="alert alert-danger">{error}</div>}
-          <form onSubmit={handleSubmit}>
-            <div className="user-box">
+          <form className='business-login-form' onSubmit={handleSubmit}>
+            <div className='business-login-user-box'>
               <input
                 type="text"
                 name="userName"
                 required
+                className='business-login-input'
                 onChange={handleChange}
                 value={user.userName}
               />
-              <label>Username</label>
+              <label className='business-login-label'>Username</label>
             </div>
-            <div className="user-box">
+            <div className='business-login-user-box'>
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
                 required
+                className='business-login-input'
                 onChange={handleChange}
                 value={user.password}
               />
-              <label>Password</label>
+              <label className='business-login-label'>Password</label>
               <i
-                className="fa fa-eye password-icon"
+                className="fa fa-eye password-icon business-login-password-icon"
                 onClick={handleTogglePassword}
               ></i>
             </div>
-            <button type="submit">
+            <button type="submit" className='business-login-button'>
               Login
             </button>
-            <Link to="/business/signup">
-              <button>Signup</button>
+            <Link to="/business/signup" className='business-login-link-button'>
+              <button className='business-signup-button'>Signup</button>
             </Link>
           </form>
         </div>
