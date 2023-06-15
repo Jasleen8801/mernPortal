@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import "../../styles/business/profile.css";
+import logo from "../../assets/logo.png";
 
 const BusinessProfile = () => {
   const [user, setUser] = useState({});
@@ -80,38 +82,71 @@ const BusinessProfile = () => {
     );
   } else {
     return (
-      <div className="container">
-        <h1>Business Profile</h1>
-        <div>
-          <h3>Company Name: {user.userName}</h3>
-          <p>Email: {user.email}</p>
-          <p>userId: {user._id}</p>
-        </div>
-        <div>
-          {jobs.length && <h2>Jobs</h2>}
-          {jobs.map((job) => (
-            <div key={job._id}>
-              <h4>{job.title}</h4>
-              <p>
-                Description: {job.description} <br />
-                Location: {job.location}
-              </p>
-              <Link to={`/business/applicantList/${job._id}`}>
-                <button>View Applicants</button>
+      <>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div className="container">
+            <Link className="navbar-brand" to="/">
+              <img src={logo} alt="logo" className="navbar--logo" />
+            </Link>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div
+              className="collapse navbar-collapse justify-content-end"
+              id="navbarSupportedContent"
+            >
+              <ul className="navbar-nav">
+                <li className="nav-item active">
+                  <Link className="nav-link" to="/">
+                    Promo Page
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div className="business-profile-container">
+          <div className="container">
+            <h1 className="business-profile-heading">
+              {user.userName}'s Profile Page
+            </h1>
+            <p className="lead">{user.companyDescription}</p>
+            <div className="container">
+              {jobs.length && <h2>Jobs</h2>}
+              {jobs.map((job) => (
+                <div key={job._id}>
+                  <h4>{job.title}</h4>
+                  <p>
+                    Description: {job.description} <br />
+                    Location: {job.location}
+                  </p>
+                  <Link to={`/business/applicantList/${job._id}`}>
+                    <button>View Applicants</button>
+                  </Link>
+                  <button onClick={() => deleteJob(job._id)}>Delete Job</button>
+                </div>
+              ))}{" "}
+              <br />
+              <button onClick={handleSignOut}>Sign Out</button>
+              <Link to="/business/update">
+                <button>Update Profile</button>
               </Link>
-              <button onClick={() => deleteJob(job._id)}>Delete Job</button>
-            </div> 
-          ))}{" "}
-          <br />
+              <Link to="/business/addJob">
+                <button>Add a Job</button>
+              </Link>
+            </div>
+          </div>
         </div>
-        <button onClick={handleSignOut}>Sign Out</button>
-        <Link to="/business/update">
-          <button>Update Profile</button>
-        </Link>
-        <Link to="/business/addJob">
-          <button>Add a Job</button>
-        </Link>
-      </div>
+      </>
     );
   }
 };
