@@ -121,7 +121,9 @@ const BusinessProfile = () => {
             </h1>
             <p className="lead">{user.companyDescription}</p>
             <div className="container">
-              {jobs.length && <h2>Jobs</h2>}
+              {jobs.length && (
+                <h2 className="business-profile-heading">Jobs</h2>
+              )}
               {jobs.map((job) => (
                 <div key={job._id}>
                   <h4>{job.title}</h4>
@@ -129,20 +131,38 @@ const BusinessProfile = () => {
                     Description: {job.description} <br />
                     Location: {job.location}
                   </p>
-                  <Link to={`/business/applicantList/${job._id}`}>
-                    <button>View Applicants</button>
-                  </Link>
-                  <button onClick={() => deleteJob(job._id)}>Delete Job</button>
+                  <div
+                    className="btn-group mb-3"
+                    role="group"
+                    aria-label="basic example"
+                  >
+                    <button
+                      onClick={() =>
+                        navigate(`/business/applicantList/${job._id}`)
+                      }
+                      className="btn btn-outline-secondary"
+                    >
+                      View Applicants
+                    </button>
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => deleteJob(job._id)}
+                    >
+                      Delete Job
+                    </button>
+                  </div>
                 </div>
               ))}{" "}
               <br />
-              <button onClick={handleSignOut}>Sign Out</button>
-              <Link to="/business/update">
-                <button>Update Profile</button>
-              </Link>
-              <Link to="/business/addJob">
-                <button>Add a Job</button>
-              </Link>
+              <div className="btn-group" role="group">
+                <button className="btn btn-secondary" onClick={handleSignOut}>Sign Out</button>
+                <button className="btn btn-secondary" onClick={() => navigate("/business/update")}>
+                  Update Profile
+                </button>
+                <button className="btn btn-secondary" onClick={() => navigate("/business/addJob")}>
+                  Add a Job
+                </button>
+              </div>
             </div>
           </div>
         </div>
