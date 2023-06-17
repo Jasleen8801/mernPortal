@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import "../../styles/business/update.css";
 
 const BusinessUpdate = () => {
   const [user, setUser] = useState({});
@@ -113,126 +114,128 @@ const BusinessUpdate = () => {
     );
   } else {
     return (
-      <div className="container">
-        <h1>Update Profile</h1>
-        {error && <p>{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="userName">Username</label>
-            <input
-              type="text"
-              id="userName"
-              name="userName"
-              value={formData.userName || ""}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="companyName">Company Name</label>
-            <input
-              type="text"
-              id="companyName"
-              name="companyName"
-              value={formData.companyName || ""}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email || ""}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="companyDescription">Company Description</label>
-            <textarea
-              id="companyDescription"
-              name="companyDescription"
-              value={formData.companyDescription || ""}
-              onChange={handleChange}
-            ></textarea>
-          </div>
-          <div>
-            <label htmlFor="companyLocation">Company Location</label>
-            <input
-              type="text"
-              id="companyLocation"
-              name="companyLocation"
-              value={formData.companyLocation || ""}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="website">Website</label>
-            <input
-              type="text"
-              id="website"
-              name="website"
-              value={formData.website || ""}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="industry">Industry</label>
-            <input
-              type="text"
-              id="industry"
-              name="industry"
-              value={formData.industry || ""}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="companySize">Company Size</label>
-            <input
-              type="text"
-              id="companySize"
-              name="companySize"
-              value={formData.companySize || ""}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="foundedYear">Founded Year</label>
-            <input
-              type="number"
-              id="foundedYear"
-              name="foundedYear"
-              value={formData.foundedYear || ""}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="contactEmail">Contact Email</label>
-            <input
-              type="email"
-              id="contactEmail"
-              name="contactEmail"
-              value={formData.contactEmail || ""}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="contactNumber">Contact Number</label>
-            <input
-              type="tel"
-              id="contactNumber"
-              name="contactNumber"
-              value={formData.contactNumber || ""}
-              onChange={handleChange}
-            />
-          </div>
-          <button type="submit" disabled={isLoading}>
-            Save Changes
-          </button>
-        </form>
+      <div className="business-update-container">
+        <div className="container">
+          <h1>Update Profile</h1>
+          {error && <p>{error}</p>}
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="userName">Username</label>
+              <input
+                type="text"
+                id="userName"
+                name="userName"
+                value={formData.userName || ""}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="companyName">Company Name</label>
+              <input
+                type="text"
+                id="companyName"
+                name="companyName"
+                value={formData.companyName || ""}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email || ""}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="companyDescription">Company Description</label>
+              <textarea
+                id="companyDescription"
+                name="companyDescription"
+                value={formData.companyDescription || ""}
+                onChange={handleChange}
+              ></textarea>
+            </div>
+            <div>
+              <label htmlFor="companyLocation">Company Location</label>
+              <input
+                type="text"
+                id="companyLocation"
+                name="companyLocation"
+                value={formData.companyLocation || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="website">Website</label>
+              <input
+                type="text"
+                id="website"
+                name="website"
+                value={formData.website || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="industry">Industry</label>
+              <input
+                type="text"
+                id="industry"
+                name="industry"
+                value={formData.industry || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="companySize">Company Size</label>
+              <input
+                type="text"
+                id="companySize"
+                name="companySize"
+                value={formData.companySize || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="foundedYear">Founded Year</label>
+              <input
+                type="number"
+                id="foundedYear"
+                name="foundedYear"
+                value={formData.foundedYear || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="contactEmail">Contact Email</label>
+              <input
+                type="email"
+                id="contactEmail"
+                name="contactEmail"
+                value={formData.contactEmail || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="contactNumber">Contact Number</label>
+              <input
+                type="tel"
+                id="contactNumber"
+                name="contactNumber"
+                value={formData.contactNumber || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <button type="submit" disabled={isLoading}>
+              Save Changes
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

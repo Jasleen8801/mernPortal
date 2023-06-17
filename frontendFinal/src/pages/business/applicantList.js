@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const BusinessApplicantList = () => {
   const { jobId } = useParams();
@@ -13,7 +13,7 @@ const BusinessApplicantList = () => {
 
   const navigate = useNavigate();
 
-  const cookie = Cookies.get('jwtBusiness');
+  const cookie = Cookies.get("jwtBusiness");
   const isLoggedIn = !!cookie;
 
   const fetchData = async () => {
@@ -25,13 +25,14 @@ const BusinessApplicantList = () => {
           params: { cookieValue: cookie },
         }
       );
-      const business = response.data.business
+      const business = response.data.business;
       setUser(response.data.business);
-      console.log(business._id);  
+      console.log(business._id);
 
       const applicantsResponse = await axios.get(
-        process.env.REACT_APP_SERVER + `business/${business._id}/applicants/${jobId}`
-      )
+        process.env.REACT_APP_SERVER +
+          `business/${business._id}/applicants/${jobId}`
+      );
       // const applict = applicantsResponse.data.applicants
       // console.log(applict);
       setApplicants(applicantsResponse.data.applicants);
@@ -53,26 +54,39 @@ const BusinessApplicantList = () => {
   useEffect(() => {
     fetchData();
   }, [jobId]);
-  
-  return (
-    <div>
-      <h1>Applicants List</h1>
-      {applicants.length === 0 ? (
-        <p>No applicants found.</p>
-      ) : (
-        <ul>
-          {applicants.map((applicant) => (
-            <li key={applicant._id}>
-              <h3>{applicant.userName}</h3>
-              <p>Email: {applicant.email}</p>
-              <p>Skills: {applicant.skills}</p>
-              <Link to={`/custom/student/${applicant._id}`}>View Profile</Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  )
-}
 
-export default BusinessApplicantList
+  if (isLoading) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div className="business-update-container">
+        <div className="container">
+          <h1>Applicants List</h1>
+          {applicants.length === 0 ? (
+            <p>No applicants found.</p>
+          ) : (
+            <ul>
+              {applicants.map((applicant) => (
+                <li key={applicant._id}>
+                  <h3>{applicant.userName}</h3>
+                  <p>Email: {applicant.email}</p>
+                  <p>Skills: {applicant.skills}</p>
+                  <button
+                    onClick={() => navigate(`/custom/student/${applicant._id}`)}
+                  >
+                    View Student Profile
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+          <button onClick={() => navigate("/business/profile")}>
+            Profile Page
+          </button>
+        </div>
+      </div>
+    );
+  }
+};
+
+export default BusinessApplicantList;

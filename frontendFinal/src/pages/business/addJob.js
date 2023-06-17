@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import "../../styles/business/update.css";
 
 const BusinessAddJob = () => {
   const [business, setBusiness] = useState({});
@@ -97,93 +98,98 @@ const BusinessAddJob = () => {
     );
   } else {
     return (
-      <div className="container">
-        <h1>Add Job</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Title:</label>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-            />
-          </div>
+      <div className="business-update-container">
+        <div className="container">
+          <h1>Add Job</h1>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>Title:</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+              />
+            </div>
 
-          <div>
-            <label>Description:</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-            ></textarea>
-          </div>
+            <div>
+              <label>Description:</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+              ></textarea>
+            </div>
 
-          <div>
-            <label>Location:</label>
-            <input
-              type="text"
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-            />
-          </div>
+            <div>
+              <label>Location:</label>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+              />
+            </div>
 
-          <div>
-            <label>Industry:</label>
-            <input
-              type="text"
-              name="industry"
-              value={formData.industry}
-              onChange={handleChange}
-            />
-          </div>
+            <div>
+              <label>Industry:</label>
+              <input
+                type="text"
+                name="industry"
+                value={formData.industry}
+                onChange={handleChange}
+              />
+            </div>
 
-          <div>
-            <label>Skills Required:</label>
-            <input
-              type="text"
-              name="skillsRequired"
-              value={formData.skillsRequired}
-              onChange={handleChange}
-            />
-          </div>
+            <div>
+              <label>Skills Required:</label>
+              <input
+                type="text"
+                name="skillsRequired"
+                value={formData.skillsRequired}
+                onChange={handleChange}
+              />
+            </div>
 
-          <div>
-            <label>Salary:</label>
-            <input
-              type="number"
-              name="salary"
-              value={formData.salary}
-              onChange={handleChange}
-            />
-          </div>
+            <div>
+              <label>Salary:</label>
+              <input
+                type="number"
+                name="salary"
+                value={formData.salary}
+                onChange={handleChange}
+              />
+            </div>
 
-          <div>
-            <label>Experience Level:</label>
-            <input
-              type="text"
-              name="experienceLevel"
-              value={formData.experienceLevel}
-              onChange={handleChange}
-            />
-          </div>
+            <div>
+              <label>Experience Level:</label>
+              <input
+                type="text"
+                name="experienceLevel"
+                value={formData.experienceLevel}
+                onChange={handleChange}
+              />
+            </div>
 
-          <div>
-            <label>Application Deadline:</label>
-            <input
-              type="date"
-              name="applicationDeadline"
-              value={formData.applicationDeadline}
-              onChange={handleChange}
-            />
-          </div>
+            <div>
+              <label>Application Deadline:</label>
+              <input
+                type="date"
+                name="applicationDeadline"
+                value={formData.applicationDeadline}
+                onChange={handleChange}
+              />
+            </div>
 
-          <button type="submit">Add Job</button>
-        </form>
-        {message && <p>{message}</p>}
-        <Link to="/business/profile"><button>Profile</button></Link>
-        <button onClick={handleSignOut}>Sign Out</button>
+            <button type="submit">Add Job</button>
+          </form>
+          {message && <p>{message}</p>}
+          <br/>
+          <Link to="/business/profile">
+            <button>Profile</button>
+          </Link>
+          <button onClick={handleSignOut}>Sign Out</button>
+        </div>
       </div>
     );
   }
