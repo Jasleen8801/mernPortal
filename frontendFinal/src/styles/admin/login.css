@@ -1,0 +1,98 @@
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom, #111, #000);
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scroll-snap-align: center;
+}
+
+.admin-login-box {
+  width: 400px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.admin-login-title {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.admin-login-alert {
+  margin-bottom: 20px;
+  padding: 10px;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  border-radius: 5px;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-login-user-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.admin-login-input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #999;
+  outline: none;
+  background: transparent;
+  color: #fff;
+}
+
+.admin-login-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 16px;
+  padding: 10px 0;
+  transition: all 0.5s ease;
+  pointer-events: none;
+  color: #888;
+}
+
+.admin-login-input:focus ~ .admin-login-label,
+.admin-login-input:not(:placeholder-shown) ~ .admin-login-label {
+  top: -20px;
+  left: 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+.admin-login-password-icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.admin-login-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-login-button:hover {
+  background-color: #0056b3;
+}

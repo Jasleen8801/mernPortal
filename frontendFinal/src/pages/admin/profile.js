@@ -136,7 +136,7 @@ const AdminProfile = () => {
             {students.map((student) => (
               <li key={student._id}>
                 <p>Username: {student.userName}</p>
-                <button onClick={() => deleteStudent(student._id)}></button>
+                <button onClick={() => deleteStudent(student._id)}>Delete</button>
                 {/* Display other student data as needed */}
               </li>
             ))}
@@ -151,7 +151,7 @@ const AdminProfile = () => {
             {businesses.map((business) => (
               <li key={business._id}>
                 <p>Name: {business.userName}</p>
-                <button onClick={() => deleteBusiness(business._id)}></button>
+                <button onClick={() => deleteBusiness(business._id)}>Delete</button>
               </li>
             ))}
           </ul>
@@ -165,7 +165,7 @@ const AdminProfile = () => {
             {jobs.map((job) => (
               <li key={job.id}>
                 <p>Title: {job.title}</p>
-                <button onClick={() => deleteJob(job._id)}></button>
+                <button onClick={() => deleteJob(job._id)}>Delete</button>
                 {/* Display other job data as needed */}
               </li>
             ))}
