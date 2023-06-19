@@ -23,11 +23,11 @@ const AdminLogin = () => {
   };
 
   useEffect(() => {
-    let isLoggedIn = Cookies.get("jwtAdmin");
+    let isLoggedIn = !!Cookies.get("jwtAdmin");
     if (isLoggedIn) {
       navigate("/admin/profile");
     }
-  });
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

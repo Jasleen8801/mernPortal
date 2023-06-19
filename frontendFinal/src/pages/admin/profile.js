@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import "../../styles/admin/profile.css";
 
 const AdminProfile = () => {
   const [admin, setAdmin] = useState([]);
@@ -29,7 +30,6 @@ const AdminProfile = () => {
       const response = await axios.get(url, {
         params: { cookieValue: cookie },
       });
-      // console.log(response.data);
       const { admin, students, businesses, jobs } = response.data;
       setAdmin(admin);
       setStudents(students);
@@ -110,71 +110,69 @@ const AdminProfile = () => {
   if (!isLoggedIn) {
     navigate("/admin/login");
   } else if (isLoading) {
-    <div className="container">
-      <p className="lead">Loading...</p>
-    </div>;
+    return (
+      <div className="admin-profile-container">
+        <p className="lead">Loading...</p>
+      </div>
+    );
   } else {
     return (
-      <div className="container">
-        <h1>Admin Profile</h1>
+      <div className="admin-profile-container">
+        <h1 className="admin-profile-heading">Admin Dashboard</h1>
 
         <Link to="/admin/addBusiness">
-          <button>Add a Business</button>
+          <button className="admin-profile-add-button">Add a Business</button>
         </Link>
 
-        <h2>Admin Information</h2>
-        {admin && (
-          <div>
-            <p>Username: {admin.userName}</p>
-            {/* Display other admin data as needed */}
-          </div>
-        )}
+        <div className="admin-section">
+          <h2>Student Information</h2>
+          {students.length > 0 ? (
+            <ul className="admin-list">
+              {students.map((student) => (
+                <li key={student._id}>
+                  <p>Username: {student.userName}</p>
+                  <button onClick={() => deleteStudent(student._id)}>Delete</button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="admin-no-data">No students found.</p>
+          )}
+        </div>
 
-        <h2>Student Information</h2>
-        {students.length > 0 ? (
-          <ul>
-            {students.map((student) => (
-              <li key={student._id}>
-                <p>Username: {student.userName}</p>
-                <button onClick={() => deleteStudent(student._id)}>Delete</button>
-                {/* Display other student data as needed */}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No students found.</p>
-        )}
+        <div className="admin-section">
+          <h2>Business Information</h2>
+          {businesses.length > 0 ? (
+            <ul className="admin-list">
+              {businesses.map((business) => (
+                <li key={business._id}>
+                  <p>Name: {business.userName}</p>
+                  <button onClick={() => deleteBusiness(business._id)}>Delete</button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="admin-no-data">No businesses found.</p>
+          )}
+        </div>
 
-        <h2>Business Information</h2>
-        {businesses.length > 0 ? (
-          <ul>
-            {businesses.map((business) => (
-              <li key={business._id}>
-                <p>Name: {business.userName}</p>
-                <button onClick={() => deleteBusiness(business._id)}>Delete</button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No businesses found.</p>
-        )}
+        <div className="admin-section">
+          <h2>Job Information</h2>
+          {jobs.length > 0 ? (
+            <ul className="admin-list">
+              {jobs.map((job) => (
+                <li key={job.id}>
+                  <p>Title: {job.title}</p>
+                  <button onClick={() => deleteJob(job._id)}>Delete</button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="admin-no-data">No jobs found.</p>
+          )}
+        </div>
 
-        <h2>Job Information</h2>
-        {jobs.length > 0 ? (
-          <ul>
-            {jobs.map((job) => (
-              <li key={job.id}>
-                <p>Title: {job.title}</p>
-                <button onClick={() => deleteJob(job._id)}>Delete</button>
-                {/* Display other job data as needed */}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No jobs found.</p>
-        )}
-
-        <button onClick={handleSignOut}>Sign Out</button>
+        <button onClick={handleSignOut} className="admin-profile-signout-button">Sign Out</button>
       </div>
     );
   }
