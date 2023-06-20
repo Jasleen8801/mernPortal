@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import "../../styles/admin/addbus.css";
 
 const AdminAddBusiness = () => {
   const [companyName, setCompanyName] = useState("");
@@ -37,38 +38,40 @@ const AdminAddBusiness = () => {
     navigate("/admin/login");
   } else {
     return (
-      <div className="container">
-        <h2>Add Business</h2>
-        {message && <div className="success-message">{message}</div>}
-        {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="companyName">Company Name</label>
-            <input
-              type="text"
-              id="companyName"
-              name="companyName"
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit">Add Business</button>
-          <Link to="/admin/profile">
-            <button>Admin Profile</button>
-          </Link>
-        </form>
+      <div className="admin-bus-container">
+        <div className="container">
+          <h1>Add Business</h1>
+          {message && <div className="success-message">{message}</div>}
+          {error && <div className="error-message">{error}</div>}
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="companyName">Company Name</label>
+              <input
+                type="text"
+                id="companyName"
+                name="companyName"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit">Add Business</button>
+            <Link to="/admin/profile">
+              <button>Admin Profile</button>
+            </Link>
+          </form>
+        </div>
       </div>
     );
     // passkey for ignitus is oxkrhecl

@@ -14,6 +14,10 @@
 
 .admin-section {
   margin-bottom: 2rem;
+  width: 100%;
+  background-color: #333;
+  padding: 1rem;
+  margin-top: 1rem;;  
 }
 
 .admin-section h2 {
@@ -32,7 +36,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
   padding: 1rem;
   margin-bottom: 1rem;
 }
@@ -40,6 +43,7 @@
 .admin-list li p {
   color: #fff;
   font-size: 1rem;
+  text-transform: capitalize;
 }
 
 .admin-list li button {
@@ -58,4 +62,17 @@
 .admin-no-data {
   color: #fff;
   font-size: 1rem;
+}
+
+.admin-profile-add-button{
+  padding: 0.5rem 1rem;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 300px;
+}
+
+.admin-profile-add-button:hover{
+  background-color: #000;
 }
