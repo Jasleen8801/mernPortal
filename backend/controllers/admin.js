@@ -6,6 +6,7 @@ const Admin = require("../models/admin");
 const Job = require("../models/job");
 const Student = require("../models/student");
 const Business = require("../models/business");
+const Project = require("../models/project");
 
 const sendEmail = require("../utils/sendEmail");
 
@@ -168,6 +169,21 @@ exports.deleteStudent = async (req, res) => {
       { $pull: { applicants: { studentID: studentId } } }
     );
 
+    await Business.updateMany(
+      { "applications.studentID": studentId },
+      { $pull: { applications: { studentID: studentId } } }
+    );
+
+    await sendEmail(
+      deletedStudent.email,
+      "Account deleted",
+      `Your account has been deleted.`
+    );
+
+    await Project.deleteMany({ student: studentId });
+    await Experience.deleteMany({ student: studentId });
+    await Education.deleteMany({ student: studentId });
+
     res.status(200).send({ message: "Student deleted successfully" });
   } catch (err) {
     console.log(err);
@@ -192,6 +208,33 @@ exports.deleteBusiness = (req, res) => {
           console.log(err);
           res.status(500).send({ message: "Internal server error" });
         });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({ message: "Internal server error" });
+    });
+
+  // Delete the jobs posted by the business
+  Job.deleteMany({ company: businessId })
+    .then(() => {
+      res.status(200).send({
+        message: "Business and related jobs deleted successfully",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({ message: "Internal server error" });
+    });
+
+  // Delete the applications made by the business
+  Student.updateMany(
+    { "applications.company": businessId },
+    { $pull: { applications: { company: businessId } } }
+  )
+    .then(() => {
+      res.status(200).send({
+        message: "Business and related applications deleted successfully",
+      });
     })
     .catch((err) => {
       console.log(err);

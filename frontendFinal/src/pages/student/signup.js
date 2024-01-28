@@ -19,6 +19,7 @@ const StudentSignup = () => {
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const REACT_APP_SERVER = "http://localhost:3000";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,13 +74,15 @@ const StudentSignup = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (validate()) {
       setIsSubmitting(true);
-      axios
-        .post(process.env.REACT_APP_SERVER + "student/signup", user)
+
+      await axios
+        .post(`${REACT_APP_SERVER}/student/signup`, user)
         .then((response) => {
+          console.log(process.env.REACT_APP_SERVER)
           console.log(response);
           setMessage(response.data.message);
           setIsSubmitting(false);

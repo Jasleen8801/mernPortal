@@ -6,7 +6,7 @@ const adminCreateToken = (admin) => {
       userName: admin.userName,
       id: admin.id,
     },
-    "JJNHtk4kdS1ZSizVJyYPTEsT4QivzFgJsDD9hNOZonw"
+    "secret"
   );
   return token;
 };

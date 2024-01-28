@@ -10,6 +10,7 @@ const StudentLogin = () => {
   const [error, setError] = useState("");
   const [user, setUser] = useState({ userName: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const REACT_APP_SERVER = "http://localhost:3000";
 
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ const StudentLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = process.env.REACT_APP_SERVER + "student/login";
+      const url = REACT_APP_SERVER + "/student/login";
       const response = await axios.post(url, user);
       const jwt = response.data.access;
       Cookies.set("jwt", jwt);

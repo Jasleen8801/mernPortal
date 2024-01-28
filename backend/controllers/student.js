@@ -7,6 +7,9 @@ const jwt = require("jsonwebtoken");
 
 const Student = require("../models/student");
 const Job = require("../models/job");
+const Project = require("../models/project");
+const Education = require("../models/education");
+const Experience = require("../models/experience");
 
 exports.getStudent = async (req, res) => {
   const token = req.query.cookieValue;
@@ -90,14 +93,50 @@ exports.updateProfile = async (req, res) => {
     description,
     skills,
     projects,
-    education,
-    experience,
+    educations,
+    experiences,
   } = req.body;
   const userId = req.params.userId;
 
   console.log(projects)
 
   try {
+    if(!projects) {
+      const project = new Project({
+        title: projects.title,
+        description: projects.description,
+        student: userId,
+      });
+      await project.save();
+    } 
+    if(!educations) {
+      const education = new Education({
+        collegeName: education.collegeName,
+        degree: education.degree,
+        field: education.field,
+        grade: education.grade,
+        startDate: education.startDate,
+        endDate: education.endDate,
+        student: userId,
+      });
+      await education.save();
+    }
+    if(!experiences) {
+      const experience = new Experience({
+        companyName: experience.companyName,
+        position: experience.position,
+        startDate: experience.startDate,
+        endDate: experience.endDate,
+        description: experience.description,
+        student: userId,
+      });
+      await experience.save();
+    }
+
+    const project = await Project.find({ student: userId });
+    const education = await Education.find({ student: userId });
+    const experience = await Experience.find({ student: userId });
+
     const updatedStudent = await Student.findByIdAndUpdate(
       userId,
       {
@@ -105,12 +144,14 @@ exports.updateProfile = async (req, res) => {
         email,
         description,
         skills,
-        projects,
-        education,
-        experience,
       },
       { new: true }
     );
+
+    updatedStudent.projects.push(project);
+    updatedStudent.education.push(education);
+    updatedStudent.experience.push(experience);
+    await updatedStudent.save();
 
     console.log(updatedStudent)
 

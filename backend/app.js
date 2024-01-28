@@ -6,6 +6,8 @@ const cors = require("cors");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 
+const InitiateMongoServer = require("./config/db");
+
 const student = require("./routes/student");
 const business = require("./routes/business");
 const admin = require("./routes/admin");
@@ -35,17 +37,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.error("Connection error", err);
-  });
+InitiateMongoServer();
 
 app.use(
   session({

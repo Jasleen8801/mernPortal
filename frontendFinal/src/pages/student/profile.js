@@ -9,6 +9,7 @@ const StudentProfile = () => {
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const REACT_APP_SERVER = "http://localhost:3000";
 
   const navigate = useNavigate();
 
@@ -19,7 +20,7 @@ const StudentProfile = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        process.env.REACT_APP_SERVER + "student/home",
+        REACT_APP_SERVER + "/student/home",
         {
           params: { cookieValue: cookie },
         }
@@ -106,24 +107,24 @@ const StudentProfile = () => {
             <p className="student-profile-lead">
               Description: {user.description}
             </p>
-            <div class="btn-group" role="group" aria-label="Basic example">
+            <div className="btn-group" role="group" aria-label="Basic example">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 onClick={handleSignOut}
               >
                 Signout
               </button>
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 onClick={() => navigate("/student/update")}
               >
                 Update Profile
               </button>
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 onClick={() => navigate("/student/jobListings")}
               >
                 Job Listings

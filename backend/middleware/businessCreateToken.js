@@ -5,7 +5,7 @@ const businessCreateToken = (business) => {
       userName: business.userName,
       id: business.id,
     },
-    "jsonwebtokensecretkeybusiness"
+    "secret"
   );
   // console.log(token);
   return token;

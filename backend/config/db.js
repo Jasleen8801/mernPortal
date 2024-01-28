@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const MONGOURI = process.env.MONGOURI;
+const MONGOURI = process.env.MONGO_URI;
 
 mongoose.set("strictQuery", false);
 
